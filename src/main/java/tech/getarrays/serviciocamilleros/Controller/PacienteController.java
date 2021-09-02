@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import tech.getarrays.serviciocamilleros.Dto.Mensaje;
@@ -42,6 +43,7 @@ public class PacienteController {
         return new ResponseEntity<>(paciente, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create")
     public ResponseEntity<?> create(@Valid @RequestBody PacienteDto pacienteDto, BindingResult bindingResult) {
         if(bindingResult.hasErrors())
@@ -56,6 +58,7 @@ public class PacienteController {
         return new ResponseEntity<>(new Mensaje("Paciente guardado"), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody PacienteDto pacienteDto) {
         if(!pacienteService.existsById(id))
@@ -74,6 +77,7 @@ public class PacienteController {
         return new ResponseEntity<>(new Mensaje("Paciente actualizado"), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") int id) {
         if(!pacienteService.existsById(id))
