@@ -63,8 +63,8 @@ public class PacienteController {
     public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody PacienteDto pacienteDto) {
         if(!pacienteService.existsById(id))
             return new ResponseEntity<>(new Mensaje("No existe"), HttpStatus.NOT_FOUND);
-        if(pacienteService.existsById(pacienteDto.getId()))
-            return new ResponseEntity<>(new Mensaje("Ya existe un paciente con ese número de documento"), HttpStatus.BAD_REQUEST);
+/*        if(pacienteService.existsById(pacienteDto.getId()))
+            return new ResponseEntity<>(new Mensaje("Ya existe un paciente con ese número de documento"), HttpStatus.BAD_REQUEST);*/
         if (StringUtils.isBlank(pacienteDto.getNombre()))
             return new ResponseEntity<>(new Mensaje("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
 

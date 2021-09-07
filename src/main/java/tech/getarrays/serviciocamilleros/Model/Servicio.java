@@ -2,6 +2,7 @@ package tech.getarrays.serviciocamilleros.Model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 
 @Entity
 public class Servicio implements Serializable {
