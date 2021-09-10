@@ -3,6 +3,7 @@ package tech.getarrays.serviciocamilleros.Controller;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import tech.getarrays.serviciocamilleros.Dto.CamilleroDto;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/camillero")
+@CrossOrigin(origins = "*")
 public class CamilleroController {
     private CamilleroService camilleroService;
 
@@ -36,6 +38,7 @@ public class CamilleroController {
         return new ResponseEntity<>(camillero, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create")
     public ResponseEntity<?> create(@Valid @RequestBody CamilleroDto camilleroDto, BindingResult bindingResult) {
         if(bindingResult.hasErrors())
@@ -47,6 +50,7 @@ public class CamilleroController {
         return new ResponseEntity<>(new Mensaje("Camillero guardado"), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody CamilleroDto camilleroDto) {
         if(!camilleroService.existsById(id))
@@ -61,6 +65,7 @@ public class CamilleroController {
         return new ResponseEntity<>(new Mensaje("Camillero actualizado"), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Camillero> delete(@PathVariable("id") int id) {
         if (camilleroService.delete(id)) {

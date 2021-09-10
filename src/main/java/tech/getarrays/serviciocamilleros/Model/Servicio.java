@@ -9,7 +9,10 @@ public class Servicio implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String fecha;
+
+    // @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    // @JsonIgnore
+    private LocalDate fecha;
     private String servicioSolicitado;
     private String destinoServicio;
     private String solicitante;
@@ -30,7 +33,7 @@ public class Servicio implements Serializable {
     public Servicio() {
     }
 
-    public Servicio(String fecha, String servicioSolicitado, String destinoServicio, String solicitante,
+    public Servicio(LocalDate fecha, String servicioSolicitado, String destinoServicio, String solicitante,
                     String transporte, String insumo, String familiar, String aislamiento, String observaciones,
                     Paciente paciente, Camillero camillero) {
         this.fecha = fecha;
@@ -55,11 +58,11 @@ public class Servicio implements Serializable {
         this.id = id;
     }
 
-    public String getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 

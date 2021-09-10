@@ -10,8 +10,7 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 public class ServicioDto implements Serializable {
-
-    private Long id;
+    
     @NotBlank
     private String fecha;
     private String servicioSolicitado;

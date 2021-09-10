@@ -3,6 +3,7 @@ package tech.getarrays.serviciocamilleros.Controller;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import tech.getarrays.serviciocamilleros.Dto.Mensaje;
@@ -17,11 +18,14 @@ import tech.getarrays.serviciocamilleros.Service.ServicioService;
 import tech.getarrays.serviciocamilleros.Model.Servicio;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/servicio")
+@CrossOrigin(origins = "*")
 public class ServicioController {
     private final ServicioService servicioService;
     private final PacienteService pacienteService;
@@ -35,6 +39,7 @@ public class ServicioController {
         this.pacienteRepo = pacienteRepo;
         this.camilleroRepo = camilleroRepo;
     }
+
 
     @GetMapping("/lista")
     public ResponseEntity<List<Servicio>> getAllServicios() {
@@ -70,8 +75,10 @@ public class ServicioController {
             return new ResponseEntity<>(new Mensaje("Campos mal puestos o inválidos"), HttpStatus.BAD_REQUEST);
        Optional<Paciente> paciente = pacienteRepo.findById(servicioDto.getIdPaciente());
        Optional<Camillero> camillero = camilleroRepo.findById(servicioDto.getIdCamillero());
+       DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+       LocalDate date = LocalDate.parse(servicioDto.getFecha(), formatter);
        if(paciente.isPresent()) {
-           Servicio servicio = new Servicio(servicioDto.getFecha(), servicioDto.getServicioSolicitado(), servicioDto.getDestinoServicio(),
+           Servicio servicio = new Servicio(date, servicioDto.getServicioSolicitado(), servicioDto.getDestinoServicio(),
                    servicioDto.getSolicitante(), servicioDto.getTransporte(), servicioDto.getInsumo(), servicioDto.getFamiliar(),
                    servicioDto.getAislamiento(), servicioDto.getObservaciones(), paciente.get(), camillero.get());
            servicioService.save(servicio);
@@ -81,6 +88,7 @@ public class ServicioController {
        }
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(@PathVariable("id") Long id, @RequestBody ServicioDto servicioDto) {
         if(!servicioService.existsById(id))
@@ -95,6 +103,7 @@ public class ServicioController {
         return new ResponseEntity<>(new Mensaje("Servicio actualizado"), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/delete/{id}")
     ResponseEntity<Servicio> delete(@PathVariable Long id){
         if(servicioService.delete(id)) {
