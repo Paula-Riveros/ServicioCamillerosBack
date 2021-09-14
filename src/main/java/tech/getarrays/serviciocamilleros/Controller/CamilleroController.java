@@ -55,8 +55,8 @@ public class CamilleroController {
     public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody CamilleroDto camilleroDto) {
         if(!camilleroService.existsById(id))
             return new ResponseEntity<>(new Mensaje("No existe"), HttpStatus.NOT_FOUND);
-        if(camilleroService.existsById(camilleroDto.getIdCamillero()))
-            return new ResponseEntity<>(new Mensaje("Ya existe un camillero con ese número de documento"), HttpStatus.BAD_REQUEST);
+       /* if(camilleroService.existsById(camilleroDto.getIdCamillero()))
+            return new ResponseEntity<>(new Mensaje("Ya existe un camillero con ese número de documento"), HttpStatus.BAD_REQUEST);*/
         if (StringUtils.isBlank(camilleroDto.getNombreCamillero()))
             return new ResponseEntity<>(new Mensaje("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
         Camillero camillero = camilleroService.getOne(id).get();
