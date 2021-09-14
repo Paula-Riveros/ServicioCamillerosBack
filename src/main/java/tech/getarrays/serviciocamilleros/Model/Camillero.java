@@ -6,7 +6,7 @@ import javax.persistence.Id;
 @Entity
 public class Camillero {
     @Id
-    private int idCamillero;
+    private Integer idCamillero;
     private String nombreCamillero;
 
     public Camillero() {
@@ -17,11 +17,11 @@ public class Camillero {
         this.nombreCamillero = nombreCamillero;
     }
 
-    public int getIdCamillero() {
+    public Integer getIdCamillero() {
         return idCamillero;
     }
 
-    public void setIdCamillero(int idCamillero) {
+    public void setIdCamillero(Integer idCamillero) {
         this.idCamillero = idCamillero;
     }
 

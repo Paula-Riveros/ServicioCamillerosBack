@@ -7,6 +7,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import java.io.Serializable;
 
 public class ServicioDto implements Serializable {
@@ -25,7 +26,7 @@ public class ServicioDto implements Serializable {
     @NotNull
     private int idPaciente;
 
-    private int idCamillero;
+    private Integer idCamillero;
 
     public ServicioDto() {
     }
@@ -126,11 +127,11 @@ public class ServicioDto implements Serializable {
         this.idPaciente = idPaciente;
     }
 
-    public int getIdCamillero() {
+    public Integer getIdCamillero() {
         return idCamillero;
     }
 
-    public void setIdCamillero(int idCamillero) {
+    public void setIdCamillero(Integer idCamillero) {
         this.idCamillero = idCamillero;
     }
 }

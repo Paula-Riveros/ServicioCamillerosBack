@@ -53,7 +53,7 @@ public class ServicioController {
         return new ResponseEntity<>(newServicio, HttpStatus.CREATED);
     }*/
 
-    @GetMapping("/read/{id}")
+    @GetMapping("/detail/{id}")
     public ResponseEntity<Servicio> getById(@PathVariable("id") Long id) {
         if (!servicioService.existsById(id))
             return new ResponseEntity(new Mensaje("No existe"), HttpStatus.NOT_FOUND);
@@ -74,13 +74,13 @@ public class ServicioController {
         if(bindingResult.hasErrors())
             return new ResponseEntity<>(new Mensaje("Campos mal puestos o inválidos"), HttpStatus.BAD_REQUEST);
        Optional<Paciente> paciente = pacienteRepo.findById(servicioDto.getIdPaciente());
-       Optional<Camillero> camillero = camilleroRepo.findById(servicioDto.getIdCamillero());
+//       Optional<Camillero> camillero = camilleroRepo.findById(servicioDto.getIdCamillero());
        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
        LocalDate date = LocalDate.parse(servicioDto.getFecha(), formatter);
        if(paciente.isPresent()) {
            Servicio servicio = new Servicio(date, servicioDto.getServicioSolicitado(), servicioDto.getDestinoServicio(),
                    servicioDto.getSolicitante(), servicioDto.getTransporte(), servicioDto.getInsumo(), servicioDto.getFamiliar(),
-                   servicioDto.getAislamiento(), servicioDto.getObservaciones(), paciente.get(), camillero.get());
+                   servicioDto.getAislamiento(), servicioDto.getObservaciones(), paciente.get(), null);
            servicioService.save(servicio);
            return new ResponseEntity<>(new Mensaje("Servicio guardado"), HttpStatus.OK);
        } else {

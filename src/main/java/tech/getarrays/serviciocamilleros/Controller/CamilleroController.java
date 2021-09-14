@@ -30,7 +30,7 @@ public class CamilleroController {
         return new ResponseEntity<>(camilleros, HttpStatus.OK);
     }
 
-    @GetMapping("/read/{id}")
+    @GetMapping("/detail/{id}")
     public ResponseEntity<Camillero> getById(@PathVariable("id") int idCamillero) {
         if (!camilleroService.existsById(idCamillero))
             return new ResponseEntity(new Mensaje("No existe"), HttpStatus.NOT_FOUND);
