@@ -75,12 +75,13 @@ public class ServicioController {
             return new ResponseEntity<>(new Mensaje("Campos mal puestos o inválidos"), HttpStatus.BAD_REQUEST);
        Optional<Paciente> paciente = pacienteRepo.findById(servicioDto.getIdPaciente());
 //       Optional<Camillero> camillero = camilleroRepo.findById(servicioDto.getIdCamillero());
-       DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+       DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
        LocalDate date = LocalDate.parse(servicioDto.getFecha(), formatter);
+       boolean aislamiento = Boolean.parseBoolean(servicioDto.getAislamiento());
        if(paciente.isPresent()) {
            Servicio servicio = new Servicio(date, servicioDto.getServicioSolicitado(), servicioDto.getDestinoServicio(),
                    servicioDto.getSolicitante(), servicioDto.getTransporte(), servicioDto.getInsumo(), servicioDto.getFamiliar(),
-                   servicioDto.getAislamiento(), servicioDto.getObservaciones(), paciente.get(), null);
+                   aislamiento, servicioDto.getObservaciones(), paciente.get(), null);
            servicioService.save(servicio);
            return new ResponseEntity<>(new Mensaje("Servicio guardado"), HttpStatus.OK);
        } else {

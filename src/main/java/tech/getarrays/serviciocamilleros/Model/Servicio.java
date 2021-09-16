@@ -19,7 +19,7 @@ public class Servicio implements Serializable {
     private String transporte;
     private String insumo;
     private String familiar;
-    private String aislamiento;
+    private boolean aislamiento;
     private String observaciones;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -34,7 +34,7 @@ public class Servicio implements Serializable {
     }
 
     public Servicio(LocalDate fecha, String servicioSolicitado, String destinoServicio, String solicitante,
-                    String transporte, String insumo, String familiar, String aislamiento, String observaciones,
+                    String transporte, String insumo, String familiar, boolean aislamiento, String observaciones,
                     Paciente paciente, Camillero camillero) {
         this.fecha = fecha;
         this.servicioSolicitado = servicioSolicitado;
@@ -114,11 +114,11 @@ public class Servicio implements Serializable {
         this.familiar = familiar;
     }
 
-    public String getAislamiento() {
+    public boolean isAislamiento() {
         return aislamiento;
     }
 
-    public void setAislamiento(String aislamiento) {
+    public void setAislamiento(boolean aislamiento) {
         this.aislamiento = aislamiento;
     }
 
