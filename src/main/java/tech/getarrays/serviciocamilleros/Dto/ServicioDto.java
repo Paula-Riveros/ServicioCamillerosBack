@@ -24,7 +24,8 @@ public class ServicioDto implements Serializable {
     private String observaciones;
 
     @NotNull
-    private int idPaciente;
+//    private int idPaciente;
+    private String docPaciente;
 
     private Integer idCamillero;
 
@@ -32,6 +33,22 @@ public class ServicioDto implements Serializable {
     }
 
     public ServicioDto(String fecha, String servicioSolicitado, String destinoServicio, String solicitante,
+                       String transporte, String insumo, String familiar, String aislamiento, String observaciones,
+                       String docPaciente, Integer idCamillero) {
+        this.fecha = fecha;
+        this.servicioSolicitado = servicioSolicitado;
+        this.destinoServicio = destinoServicio;
+        this.solicitante = solicitante;
+        this.transporte = transporte;
+        this.insumo = insumo;
+        this.familiar = familiar;
+        this.aislamiento = aislamiento;
+        this.observaciones = observaciones;
+        this.docPaciente = docPaciente;
+        this.idCamillero = idCamillero;
+    }
+
+    /*public ServicioDto(String fecha, String servicioSolicitado, String destinoServicio, String solicitante,
                        String transporte, String insumo, String familiar, String aislamiento,
                        String observaciones, int idPaciente, int idCamillero) {
         this.fecha = fecha;
@@ -45,7 +62,7 @@ public class ServicioDto implements Serializable {
         this.observaciones = observaciones;
         this.idPaciente = idPaciente;
         this.idCamillero = idCamillero;
-    }
+    }*/
 
     public String getFecha() {
         return fecha;
@@ -119,12 +136,20 @@ public class ServicioDto implements Serializable {
         this.observaciones = observaciones;
     }
 
-    public int getIdPaciente() {
+/*    public int getIdPaciente() {
         return idPaciente;
     }
 
     public void setIdPaciente(int idPaciente) {
         this.idPaciente = idPaciente;
+    }*/
+
+    public String getDocPaciente() {
+        return docPaciente;
+    }
+
+    public void setDocPaciente(String docPaciente) {
+        this.docPaciente = docPaciente;
     }
 
     public Integer getIdCamillero() {

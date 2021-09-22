@@ -10,9 +10,12 @@ import tech.getarrays.serviciocamilleros.Dto.Mensaje;
 import tech.getarrays.serviciocamilleros.Dto.PacienteDto;
 import tech.getarrays.serviciocamilleros.Dto.ServicioDto;
 import tech.getarrays.serviciocamilleros.Model.Camillero;
+import tech.getarrays.serviciocamilleros.Model.Genpacien;
 import tech.getarrays.serviciocamilleros.Model.Paciente;
 import tech.getarrays.serviciocamilleros.Repo.CamilleroRepo;
+import tech.getarrays.serviciocamilleros.Repo.GenpacienRepo;
 import tech.getarrays.serviciocamilleros.Repo.PacienteRepo;
+import tech.getarrays.serviciocamilleros.Service.GenpacienService;
 import tech.getarrays.serviciocamilleros.Service.PacienteService;
 import tech.getarrays.serviciocamilleros.Service.ServicioService;
 import tech.getarrays.serviciocamilleros.Model.Servicio;
@@ -29,15 +32,19 @@ import java.util.Optional;
 public class ServicioController {
     private final ServicioService servicioService;
     private final PacienteService pacienteService;
+    private final GenpacienService genpacienService;
     private PacienteRepo pacienteRepo;
     private CamilleroRepo camilleroRepo;
+    private GenpacienRepo genpacienRepo;
 
-    public ServicioController(ServicioService servicioService, PacienteService pacienteService,
-                              PacienteRepo pacienteRepo, CamilleroRepo camilleroRepo) {
+    public ServicioController(ServicioService servicioService, PacienteService pacienteService, GenpacienService genpacienService,
+                              PacienteRepo pacienteRepo, CamilleroRepo camilleroRepo, GenpacienRepo genpacienRepo) {
         this.servicioService = servicioService;
         this.pacienteService = pacienteService;
+        this.genpacienService = genpacienService;
         this.pacienteRepo = pacienteRepo;
         this.camilleroRepo = camilleroRepo;
+        this.genpacienRepo = genpacienRepo;
     }
 
 
@@ -69,7 +76,7 @@ public class ServicioController {
         return new ResponseEntity<>(servicio, HttpStatus.OK);
     }*/
 
-   @PostMapping("/create")
+   /*@PostMapping("/create")
     public ResponseEntity<?> create(@Valid @RequestBody ServicioDto servicioDto, BindingResult bindingResult) {
         if(bindingResult.hasErrors())
             return new ResponseEntity<>(new Mensaje("Campos mal puestos o inválidos"), HttpStatus.BAD_REQUEST);
@@ -87,6 +94,26 @@ public class ServicioController {
        } else {
            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
        }
+    }*/
+
+    @PostMapping("/create")
+    public ResponseEntity<?> create(@Valid @RequestBody ServicioDto servicioDto, BindingResult bindingResult) {
+        if(bindingResult.hasErrors())
+            return new ResponseEntity<>(new Mensaje("Campos mal puestos o inválidos"), HttpStatus.BAD_REQUEST);
+        Optional<Genpacien> genpacien = genpacienRepo.findByPacnumdoc(servicioDto.getDocPaciente());
+//       Optional<Camillero> camillero = camilleroRepo.findById(servicioDto.getIdCamillero());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate date = LocalDate.parse(servicioDto.getFecha(), formatter);
+        boolean aislamiento = Boolean.parseBoolean(servicioDto.getAislamiento());
+        if(genpacien.isPresent()) {
+            Servicio servicio = new Servicio(date, servicioDto.getServicioSolicitado(), servicioDto.getDestinoServicio(),
+                    servicioDto.getSolicitante(), servicioDto.getTransporte(), servicioDto.getInsumo(), servicioDto.getFamiliar(),
+                    aislamiento, servicioDto.getObservaciones(), genpacien.get(), null);
+            servicioService.save(servicio);
+            return new ResponseEntity<>(new Mensaje("Servicio guardado"), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @PreAuthorize("hasRole('ADMIN')")

@@ -24,18 +24,40 @@ public class Servicio implements Serializable {
     private boolean aislamiento;
     private String observaciones;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+  /*  @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_paciente", referencedColumnName = "id")
-    private Paciente paciente;
+    private Paciente paciente;*/
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "oidGenpacien", referencedColumnName = "oid")
+    private Genpacien genpacien;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idCamillero", referencedColumnName = "idCamillero")
     private Camillero camillero;
 
+
+
     public Servicio() {
     }
 
     public Servicio(LocalDate fecha, String servicioSolicitado, String destinoServicio, String solicitante,
+                    String transporte, String insumo, String familiar, boolean aislamiento, String observaciones,
+                    Genpacien genpacien, Camillero camillero) {
+        this.fecha = fecha;
+        this.servicioSolicitado = servicioSolicitado;
+        this.destinoServicio = destinoServicio;
+        this.solicitante = solicitante;
+        this.transporte = transporte;
+        this.insumo = insumo;
+        this.familiar = familiar;
+        this.aislamiento = aislamiento;
+        this.observaciones = observaciones;
+        this.genpacien = genpacien;
+        this.camillero = camillero;
+    }
+
+    /*public Servicio(LocalDate fecha, String servicioSolicitado, String destinoServicio, String solicitante,
                     String transporte, String insumo, String familiar, boolean aislamiento, String observaciones,
                     Paciente paciente, Camillero camillero) {
         this.fecha = fecha;
@@ -49,7 +71,7 @@ public class Servicio implements Serializable {
         this.observaciones = observaciones;
         this.paciente = paciente;
         this.camillero = camillero;
-    }
+    }*/
 
 
     public Long getId() {
@@ -132,12 +154,20 @@ public class Servicio implements Serializable {
         this.observaciones = observaciones;
     }
 
-    public Paciente getPaciente() {
+   /* public Paciente getPaciente() {
         return paciente;
     }
 
     public void setPaciente(Paciente paciente) {
         this.paciente = paciente;
+    }*/
+
+    public Genpacien getGenpacien() {
+        return genpacien;
+    }
+
+    public void setGenpacien(Genpacien genpacien) {
+        this.genpacien = genpacien;
     }
 
     public Camillero getCamillero() {
@@ -161,7 +191,7 @@ public class Servicio implements Serializable {
                 ", familiar='" + familiar + '\'' +
                 ", aislamiento='" + aislamiento + '\'' +
                 ", observaciones='" + observaciones + '\'' +
-                ", paciente=" + paciente +
+                ", genpacien=" + genpacien +
                 ", camillero=" + camillero +
                 '}';
     }
