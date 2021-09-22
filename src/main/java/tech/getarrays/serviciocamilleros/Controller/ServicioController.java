@@ -98,7 +98,6 @@ public class ServicioController {
             return new ResponseEntity<>(new Mensaje("La fecha es obligatoria"), HttpStatus.BAD_REQUEST);
         Optional<Camillero> camillero = camilleroRepo.findById(servicioDto.getIdCamillero());
         Servicio servicio = servicioService.getOne(id).get();
-        servicio.setServicioSolicitado(servicioDto.getServicioSolicitado());
         servicio.setCamillero(camillero.get());
         servicioService.save(servicio);
         return new ResponseEntity<>(new Mensaje("Servicio actualizado"), HttpStatus.OK);

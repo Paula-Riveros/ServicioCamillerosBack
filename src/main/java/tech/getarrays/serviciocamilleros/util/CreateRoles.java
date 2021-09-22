@@ -1,4 +1,4 @@
-package tech.getarrays.serviciocamilleros.util;
+/*package tech.getarrays.serviciocamilleros.util;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -6,12 +6,6 @@ import org.springframework.stereotype.Component;
 import tech.getarrays.serviciocamilleros.Security.entity.Rol;
 import tech.getarrays.serviciocamilleros.Security.enums.RolNombre;
 import tech.getarrays.serviciocamilleros.Security.service.RolService;
-
-/**
- * MUY IMPORTANTE: ESTA CLASE SÓLO SE EJECUTARÁ UNA VEZ PARA CREAR LOS ROLES.
- * UNA VEZ CREADOS SE DEBERÁ ELIMINAR O BIEN COMENTAR EL CÓDIGO
- *
- */
 
 @Component
 public class CreateRoles implements CommandLineRunner {
@@ -25,4 +19,10 @@ public class CreateRoles implements CommandLineRunner {
         rolService.save(rolAdmin);
         rolService.save(rolUser);
     }
-}
+}*/
+
+/**
+ * MUY IMPORTANTE: ESTA CLASE SÓLO SE EJECUTARÁ UNA VEZ PARA CREAR LOS ROLES.
+ * UNA VEZ CREADOS SE DEBERÁ ELIMINAR O BIEN COMENTAR EL CÓDIGO
+ *
+ */

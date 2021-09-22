@@ -1,5 +1,7 @@
 package tech.getarrays.serviciocamilleros.Model;
 
+import org.hibernate.annotations.OnDelete;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
