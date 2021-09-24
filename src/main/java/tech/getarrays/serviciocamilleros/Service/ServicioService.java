@@ -1,12 +1,15 @@
 package tech.getarrays.serviciocamilleros.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import tech.getarrays.serviciocamilleros.Model.Paciente;
 import tech.getarrays.serviciocamilleros.Repo.ServicioRepo;
 import tech.getarrays.serviciocamilleros.Model.Servicio;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,11 +27,15 @@ public class ServicioService {
         return servicioRepo.findAll();
     }
 
+//    public Page<Servicio> list(Pageable pageable) {
+//        return servicioRepo.findAll(pageable);
+//    }
+
     public Optional<Servicio> getOne(Long id) {
         return servicioRepo.findById(id);
     }
 
-    public Optional<Servicio> getByFecha(String fecha) {
+    public List<Servicio> getByFecha(LocalDate fecha) {
         return servicioRepo.findByFecha(fecha);
     }
 
@@ -40,7 +47,7 @@ public class ServicioService {
 //        servicioRepo.deleteById(id);
 //    }
 
-    public boolean existsByFecha(String fecha) {
+    public boolean existsByFecha(LocalDate fecha) {
         return servicioRepo.existsByFecha(fecha);
     }
 

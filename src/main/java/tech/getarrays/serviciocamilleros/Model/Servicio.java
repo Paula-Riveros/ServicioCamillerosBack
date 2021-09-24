@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @Entity
 public class Servicio implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     // @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)

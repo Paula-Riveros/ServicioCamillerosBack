@@ -1,6 +1,9 @@
 package tech.getarrays.serviciocamilleros.Controller;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -47,12 +50,26 @@ public class ServicioController {
         this.genpacienRepo = genpacienRepo;
     }
 
-
     @GetMapping("/lista")
     public ResponseEntity<List<Servicio>> getAllServicios() {
         List<Servicio> servicios = servicioService.list();
         return new ResponseEntity<>(servicios, HttpStatus.OK);
     }
+
+    /*@GetMapping("/lista")
+    public ResponseEntity<Page<Servicio>> getAllServicios(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "15") int size,
+            @RequestParam(defaultValue = "id") String order,
+            @RequestParam(defaultValue = "true") boolean asc
+    ) {
+        Page<Servicio> servicios = servicioService.list(
+                PageRequest.of(page, size, Sort.by(order)));
+        if (!asc)
+            servicios = servicioService.list(
+                    PageRequest.of(page, size, Sort.by(order).descending()));
+        return new ResponseEntity<>(servicios, HttpStatus.OK);
+    }*/
 
 /*    @PostMapping("/add")
     public ResponseEntity<Servicio> addServicio(@RequestBody Servicio servicio) {
@@ -68,13 +85,23 @@ public class ServicioController {
         return new ResponseEntity<>(servicio, HttpStatus.OK);
     }
 
- /*   @GetMapping("/detailfecha/{fecha}")
-    public ResponseEntity<Servicio> getByFecha(@PathVariable("fecha") String fecha) {
+  /*  @GetMapping("/listafecha/{fecha}")
+    public ResponseEntity<List<Servicio>> getByFecha(@PathVariable("fecha") LocalDate fecha) {
         if(!servicioService.existsByFecha(fecha))
             return new ResponseEntity(new Mensaje("No existe"), HttpStatus.NOT_FOUND);
-        Servicio servicio = servicioService.getByFecha(fecha).get();
-        return new ResponseEntity<>(servicio, HttpStatus.OK);
+        List<Servicio> servicios = servicioService.getByFecha(fecha).get();
+        return new ResponseEntity<>(servicios, HttpStatus.OK);
     }*/
+
+    @GetMapping("/listafecha")
+    public ResponseEntity<List<Servicio>> getByFecha(@RequestBody ServicioDto servicioDto) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate date = LocalDate.parse(servicioDto.getFecha(), formatter);
+        if(!servicioService.existsByFecha(date))
+            return new ResponseEntity(new Mensaje("No existe"), HttpStatus.NOT_FOUND);
+        List<Servicio> servicios = servicioService.getByFecha(date);
+        return new ResponseEntity<>(servicios, HttpStatus.OK);
+    }
 
    /*@PostMapping("/create")
     public ResponseEntity<?> create(@Valid @RequestBody ServicioDto servicioDto, BindingResult bindingResult) {
