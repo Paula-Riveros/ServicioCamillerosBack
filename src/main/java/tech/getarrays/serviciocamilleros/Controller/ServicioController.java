@@ -25,6 +25,7 @@ import tech.getarrays.serviciocamilleros.Model.Servicio;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
@@ -129,13 +130,23 @@ public class ServicioController {
             return new ResponseEntity<>(new Mensaje("Campos mal puestos o inválidos"), HttpStatus.BAD_REQUEST);
         Optional<Genpacien> genpacien = genpacienRepo.findByPacnumdoc(servicioDto.getDocPaciente());
 //       Optional<Camillero> camillero = camilleroRepo.findById(servicioDto.getIdCamillero());
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate date = LocalDate.parse(servicioDto.getFecha(), formatter);
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("H:mm:ss");
+        LocalTime horaEnvio = LocalTime.parse(servicioDto.getHoraEnvio(), dtf);
+        LocalTime horaAsignacion = LocalTime.parse(servicioDto.getHoraAsignacion(), dtf);
+        LocalTime horaEjecucion = LocalTime.parse(servicioDto.getHoraEjecucion(), dtf);
+        LocalTime horaFinalizacion = LocalTime.parse(servicioDto.getHoraFinalizacion(), dtf);
+
         boolean aislamiento = Boolean.parseBoolean(servicioDto.getAislamiento());
+
         if(genpacien.isPresent()) {
             Servicio servicio = new Servicio(date, servicioDto.getServicioSolicitado(), servicioDto.getDestinoServicio(),
                     servicioDto.getSolicitante(), servicioDto.getTransporte(), servicioDto.getInsumo(), servicioDto.getFamiliar(),
-                    aislamiento, servicioDto.getObservaciones(), genpacien.get(), null);
+                    aislamiento, servicioDto.getObservaciones(), genpacien.get(), null, horaEnvio,
+                    horaAsignacion, horaEjecucion, horaFinalizacion);
             servicioService.save(servicio);
             return new ResponseEntity<>(new Mensaje("Servicio guardado"), HttpStatus.OK);
         } else {

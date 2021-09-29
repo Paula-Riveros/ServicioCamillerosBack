@@ -8,13 +8,15 @@ public class Camillero {
     @Id
     private Integer idCamillero;
     private String nombreCamillero;
+    private Boolean estadoCamillero;
 
     public Camillero() {
     }
 
-    public Camillero(int idCamillero, String nombreCamillero) {
+    public Camillero(int idCamillero, String nombreCamillero, Boolean estadoCamillero) {
         this.idCamillero = idCamillero;
         this.nombreCamillero = nombreCamillero;
+        this.estadoCamillero = estadoCamillero;
     }
 
     public Integer getIdCamillero() {
@@ -33,4 +35,11 @@ public class Camillero {
         this.nombreCamillero = nombreCamillero;
     }
 
+    public boolean isEstadoCamillero() {
+        return estadoCamillero;
+    }
+
+    public void setEstadoCamillero(Boolean estadoCamillero) {
+        this.estadoCamillero = estadoCamillero;
+    }
 }

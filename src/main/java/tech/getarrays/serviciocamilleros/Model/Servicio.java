@@ -5,11 +5,12 @@ import org.hibernate.annotations.OnDelete;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Entity
 public class Servicio implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     // @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
@@ -36,14 +37,18 @@ public class Servicio implements Serializable {
     @JoinColumn(name = "idCamillero", referencedColumnName = "idCamillero")
     private Camillero camillero;
 
-
+    private LocalTime horaEnvio;
+    private LocalTime horaAsignacion;
+    private LocalTime horaEjecucion;
+    private LocalTime horaFinalizacion;
 
     public Servicio() {
     }
 
     public Servicio(LocalDate fecha, String servicioSolicitado, String destinoServicio, String solicitante,
                     String transporte, String insumo, String familiar, boolean aislamiento, String observaciones,
-                    Genpacien genpacien, Camillero camillero) {
+                    Genpacien genpacien, Camillero camillero, LocalTime horaEnvio, LocalTime horaAsignacion,
+                    LocalTime horaEjecucion, LocalTime horaFinalizacion) {
         this.fecha = fecha;
         this.servicioSolicitado = servicioSolicitado;
         this.destinoServicio = destinoServicio;
@@ -55,6 +60,10 @@ public class Servicio implements Serializable {
         this.observaciones = observaciones;
         this.genpacien = genpacien;
         this.camillero = camillero;
+        this.horaEnvio = horaEnvio;
+        this.horaAsignacion = horaAsignacion;
+        this.horaEjecucion = horaEjecucion;
+        this.horaFinalizacion = horaFinalizacion;
     }
 
     /*public Servicio(LocalDate fecha, String servicioSolicitado, String destinoServicio, String solicitante,
@@ -178,21 +187,57 @@ public class Servicio implements Serializable {
         this.camillero = camillero;
     }
 
+    public LocalTime getHoraEnvio() {
+        return horaEnvio;
+    }
+
+    public void setHoraEnvio(LocalTime horaEnvio) {
+        this.horaEnvio = horaEnvio;
+    }
+
+    public LocalTime getHoraAsignacion() {
+        return horaAsignacion;
+    }
+
+    public void setHoraAsignacion(LocalTime horaAsignacion) {
+        this.horaAsignacion = horaAsignacion;
+    }
+
+    public LocalTime getHoraEjecucion() {
+        return horaEjecucion;
+    }
+
+    public void setHoraEjecucion(LocalTime horaEjecucion) {
+        this.horaEjecucion = horaEjecucion;
+    }
+
+    public LocalTime getHoraFinalizacion() {
+        return horaFinalizacion;
+    }
+
+    public void setHoraFinalizacion(LocalTime horaFinalizacion) {
+        this.horaFinalizacion = horaFinalizacion;
+    }
+
     @Override
     public String toString() {
         return "Servicio{" +
                 "id=" + id +
-                ", fecha='" + fecha + '\'' +
+                ", fecha=" + fecha +
                 ", servicioSolicitado='" + servicioSolicitado + '\'' +
                 ", destinoServicio='" + destinoServicio + '\'' +
                 ", solicitante='" + solicitante + '\'' +
                 ", transporte='" + transporte + '\'' +
                 ", insumo='" + insumo + '\'' +
                 ", familiar='" + familiar + '\'' +
-                ", aislamiento='" + aislamiento + '\'' +
+                ", aislamiento=" + aislamiento +
                 ", observaciones='" + observaciones + '\'' +
                 ", genpacien=" + genpacien +
                 ", camillero=" + camillero +
+                ", horaEnvio=" + horaEnvio +
+                ", horaAsignacion=" + horaAsignacion +
+                ", horaEjecucion=" + horaEjecucion +
+                ", horaFinalizacion=" + horaFinalizacion +
                 '}';
     }
 }

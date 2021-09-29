@@ -18,9 +18,7 @@ public class CamilleroService {
         this.camilleroRepo = camilleroRepo;
     }
 
-    public List<Camillero> list() {
-        return camilleroRepo.findAll();
-    }
+    public List<Camillero> list() { return camilleroRepo.findAll(); }
 
     public Optional<Camillero> getOne(int idCamillero) {
         return camilleroRepo.findById(idCamillero);
