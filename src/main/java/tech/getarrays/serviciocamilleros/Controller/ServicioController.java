@@ -161,14 +161,24 @@ public class ServicioController {
             return new ResponseEntity<>(new Mensaje("No existe"), HttpStatus.NOT_FOUND);
         if (StringUtils.isBlank(servicioDto.getFecha()))
             return new ResponseEntity<>(new Mensaje("La fecha es obligatoria"), HttpStatus.BAD_REQUEST);
+
         Optional<Camillero> camillero = camilleroRepo.findById(servicioDto.getIdCamillero());
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("H:mm:ss");
+        LocalTime horaAsignacion = LocalTime.parse(servicioDto.getHoraAsignacion(), dtf);
+        LocalTime horaEjecucion = LocalTime.parse(servicioDto.getHoraEjecucion(), dtf);
+        LocalTime horaFinalizacion = LocalTime.parse(servicioDto.getHoraFinalizacion(), dtf);
+
         Servicio servicio = servicioService.getOne(id).get();
         servicio.setCamillero(camillero.get());
+        servicio.setHoraAsignacion(horaAsignacion);
+        servicio.setHoraEjecucion(horaEjecucion);
+        servicio.setHoraFinalizacion(horaFinalizacion);
         servicioService.save(servicio);
         return new ResponseEntity<>(new Mensaje("Servicio actualizado"), HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('SUPERADMIN')")
     @DeleteMapping("/delete/{id}")
     ResponseEntity<Servicio> delete(@PathVariable Long id){
         if(servicioService.delete(id)) {
