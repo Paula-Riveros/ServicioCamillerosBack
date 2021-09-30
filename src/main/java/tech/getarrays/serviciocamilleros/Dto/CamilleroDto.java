@@ -14,12 +14,12 @@ public class CamilleroDto implements Serializable {
     @NotBlank
     private String nombreCamillero;
 
-    private String estadoCamillero;
+    private boolean estadoCamillero;
 
     public CamilleroDto() {
     }
 
-    public CamilleroDto(int idCamillero, String nombreCamillero, String estadoCamillero) {
+    public CamilleroDto(int idCamillero, String nombreCamillero, boolean estadoCamillero) {
         this.idCamillero = idCamillero;
         this.nombreCamillero = nombreCamillero;
         this.estadoCamillero = estadoCamillero;
@@ -41,11 +41,11 @@ public class CamilleroDto implements Serializable {
         this.nombreCamillero = nombreCamillero;
     }
 
-    public String getEstadoCamillero() {
+    public boolean isEstadoCamillero() {
         return estadoCamillero;
     }
 
-    public void setEstadoCamillero(String estadoCamillero) {
+    public void setEstadoCamillero(boolean estadoCamillero) {
         this.estadoCamillero = estadoCamillero;
     }
 }

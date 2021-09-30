@@ -38,20 +38,20 @@ public class CamilleroController {
         return new ResponseEntity<>(camillero, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('SUPERADMIN')")
     @PostMapping("/create")
     public ResponseEntity<?> create(@Valid @RequestBody CamilleroDto camilleroDto, BindingResult bindingResult) {
         if(bindingResult.hasErrors())
             return new ResponseEntity<>(new Mensaje("Campos mal puestos o inválidos"), HttpStatus.BAD_REQUEST);
         if (camilleroService.existsById(camilleroDto.getIdCamillero()))
             return new ResponseEntity(new Mensaje("Ya existe un camillero con ese número de documento"), HttpStatus.BAD_REQUEST);
-        Boolean estadoCamillero = Boolean.parseBoolean(camilleroDto.getEstadoCamillero());
-        Camillero camillero = new Camillero(camilleroDto.getIdCamillero(), camilleroDto.getNombreCamillero(), estadoCamillero);
+        // Boolean estadoCamillero = Boolean.parseBoolean(camilleroDto.getEstadoCamillero());
+        Camillero camillero = new Camillero(camilleroDto.getIdCamillero(), camilleroDto.getNombreCamillero(), camilleroDto.isEstadoCamillero());
         camilleroService.save(camillero);
         return new ResponseEntity<>(new Mensaje("Camillero guardado"), HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('SUPERADMIN')")
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody CamilleroDto camilleroDto) {
         if(!camilleroService.existsById(id))
@@ -60,10 +60,10 @@ public class CamilleroController {
             return new ResponseEntity<>(new Mensaje("Ya existe un camillero con ese número de documento"), HttpStatus.BAD_REQUEST);*/
         if (StringUtils.isBlank(camilleroDto.getNombreCamillero()))
             return new ResponseEntity<>(new Mensaje("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
-        Boolean estadoCamillero = Boolean.parseBoolean(camilleroDto.getEstadoCamillero());
+        // Boolean estadoCamillero = Boolean.parseBoolean(camilleroDto.getEstadoCamillero());
         Camillero camillero = camilleroService.getOne(id).get();
         camillero.setNombreCamillero(camilleroDto.getNombreCamillero());
-        camillero.setEstadoCamillero(estadoCamillero);
+        camillero.setEstadoCamillero(camilleroDto.isEstadoCamillero());
         camilleroService.save(camillero);
         return new ResponseEntity<>(new Mensaje("Camillero actualizado"), HttpStatus.OK);
     }

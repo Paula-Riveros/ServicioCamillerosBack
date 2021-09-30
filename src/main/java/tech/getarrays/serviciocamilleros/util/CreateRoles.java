@@ -1,4 +1,4 @@
-/*package tech.getarrays.serviciocamilleros.util;
+/**package tech.getarrays.serviciocamilleros.util;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -14,10 +14,15 @@ public class CreateRoles implements CommandLineRunner {
     RolService rolService;
     @Override
     public void run(String... args) throws Exception {
+        Rol rolSuper = new Rol(RolNombre.ROLE_SUPERADMIN);
         Rol rolAdmin = new Rol(RolNombre.ROLE_ADMIN);
         Rol rolUser = new Rol(RolNombre.ROLE_USER);
+        rolService.save(rolSuper);
         rolService.save(rolAdmin);
         rolService.save(rolUser);
+
+
+
     }
 }*/
 
