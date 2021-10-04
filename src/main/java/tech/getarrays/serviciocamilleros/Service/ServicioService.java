@@ -27,10 +27,6 @@ public class ServicioService {
         return servicioRepo.findAll();
     }
 
-//    public Page<Servicio> list(Pageable pageable) {
-//        return servicioRepo.findAll(pageable);
-//    }
-
     public Optional<Servicio> getOne(Long id) {
         return servicioRepo.findById(id);
     }
@@ -43,9 +39,9 @@ public class ServicioService {
         servicioRepo.save(servicio);
     }
 
-//    public void delete(Long id) {
-//        servicioRepo.deleteById(id);
-//    }
+    public Servicio updateTimeServicio(Servicio servicio) {
+        return servicioRepo.save(servicio);
+    }
 
     public boolean existsByFecha(LocalDate fecha) {
         return servicioRepo.existsByFecha(fecha);

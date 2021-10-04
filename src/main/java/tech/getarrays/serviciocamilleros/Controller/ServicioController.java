@@ -178,6 +178,29 @@ public class ServicioController {
         return new ResponseEntity<>(new Mensaje("Servicio actualizado"), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/updatetime")
+    public ResponseEntity<Servicio> updateTime(@RequestBody Servicio servicio) {
+        Servicio updateTime = servicioService.updateTimeServicio(servicio);
+        return new ResponseEntity(new Mensaje("Hora guardada"), HttpStatus.OK);
+    }
+
+    /*@PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/updatetime/{id}")
+    public ResponseEntity<?> updateTime(@PathVariable("id") Long id, @RequestBody ServicioDto servicioDto) {
+        if(!servicioService.existsById(id))
+            return new ResponseEntity<>(new Mensaje("No existe"), HttpStatus.NOT_FOUND);
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("H:mm:ss");
+        LocalTime horaEjecucion = LocalTime.parse(servicioDto.getHoraEjecucion(), dtf);
+        LocalTime horaFinalizacion = LocalTime.parse(servicioDto.getHoraFinalizacion(), dtf);
+
+        Servicio servicio = servicioService.getOne(id).get();
+        servicio.setHoraEjecucion(horaEjecucion);
+        servicio.setHoraFinalizacion(horaFinalizacion);
+        servicioService.save(servicio);
+        return new ResponseEntity<>(new Mensaje("Hora guardada"), HttpStatus.OK);
+    }*/
+
     @PreAuthorize("hasRole('ADMIN') or hasRole('SUPERADMIN')")
     @DeleteMapping("/delete/{id}")
     ResponseEntity<Servicio> delete(@PathVariable Long id){
