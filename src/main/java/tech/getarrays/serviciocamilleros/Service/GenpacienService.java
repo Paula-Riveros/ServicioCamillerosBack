@@ -3,7 +3,6 @@ package tech.getarrays.serviciocamilleros.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tech.getarrays.serviciocamilleros.Model.Genpacien;
-import tech.getarrays.serviciocamilleros.Model.Paciente;
 import tech.getarrays.serviciocamilleros.Repo.GenpacienRepo;
 
 import javax.transaction.Transactional;

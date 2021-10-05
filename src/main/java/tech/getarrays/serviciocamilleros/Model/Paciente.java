@@ -1,4 +1,4 @@
-package tech.getarrays.serviciocamilleros.Model;
+/*package tech.getarrays.serviciocamilleros.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -76,4 +76,4 @@ public class Paciente implements Serializable {
                 ", telefono=" + telefono +
                 '}';
     }
-}
+}*/

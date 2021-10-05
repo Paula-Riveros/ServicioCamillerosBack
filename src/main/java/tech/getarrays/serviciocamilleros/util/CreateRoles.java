@@ -20,9 +20,6 @@ public class CreateRoles implements CommandLineRunner {
         rolService.save(rolSuper);
         rolService.save(rolAdmin);
         rolService.save(rolUser);
-
-
-
     }
 }*/
 

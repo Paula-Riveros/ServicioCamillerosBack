@@ -1,4 +1,4 @@
-package tech.getarrays.serviciocamilleros.Controller;
+/*package tech.getarrays.serviciocamilleros.Controller;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class PacienteController {
     public ResponseEntity<List<Paciente>> lista() {
         List<Paciente> list = pacienteService.list();
         return new ResponseEntity<>(list, HttpStatus.OK);
-    }
+    }*/
 
 /*    @PostMapping("/add")
     public ResponseEntity<Paciente> addPaciente(@RequestBody Paciente paciente) {
@@ -35,7 +35,7 @@ public class PacienteController {
         return new ResponseEntity(newPaciente, HttpStatus.CREATED);
     }*/
 
-    @GetMapping("/detail/{id}")
+ /*   @GetMapping("/detail/{id}")
     public ResponseEntity<Paciente> getById(@PathVariable("id") int id) {
         if(!pacienteService.existsById(id))
             return new ResponseEntity(new Mensaje("No existe"), HttpStatus.NOT_FOUND);
@@ -47,10 +47,10 @@ public class PacienteController {
     @PostMapping("/create")
     public ResponseEntity<?> create(@Valid @RequestBody PacienteDto pacienteDto, BindingResult bindingResult) {
         if(bindingResult.hasErrors())
-            return new ResponseEntity<>(new Mensaje("Campos mal puestos o inválidos"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new Mensaje("Campos mal puestos o inválidos"), HttpStatus.BAD_REQUEST);*/
         /*if (StringUtils.isBlank(pacienteDto.getNombre()))
             return new ResponseEntity(new Mensaje("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);*/
-        if(pacienteService.existsById(pacienteDto.getId()))
+/*        if(pacienteService.existsById(pacienteDto.getId()))
             return new ResponseEntity<>(new Mensaje("Ya existe un paciente con ese número de documento"), HttpStatus.BAD_REQUEST);
         Paciente paciente = new Paciente(pacienteDto.getId(), pacienteDto.getNombre(), pacienteDto.getEdad(),
                 pacienteDto.getDireccion(), pacienteDto.getTelefono());
@@ -62,10 +62,10 @@ public class PacienteController {
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody PacienteDto pacienteDto) {
         if(!pacienteService.existsById(id))
-            return new ResponseEntity<>(new Mensaje("No existe"), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new Mensaje("No existe"), HttpStatus.NOT_FOUND);*/
 /*        if(pacienteService.existsById(pacienteDto.getId()))
             return new ResponseEntity<>(new Mensaje("Ya existe un paciente con ese número de documento"), HttpStatus.BAD_REQUEST);*/
-        if (StringUtils.isBlank(pacienteDto.getNombre()))
+ /*       if (StringUtils.isBlank(pacienteDto.getNombre()))
             return new ResponseEntity<>(new Mensaje("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
 
         Paciente paciente = pacienteService.getOne(id).get();
@@ -86,4 +86,4 @@ public class PacienteController {
         return new ResponseEntity<>(new Mensaje("Paciente eliminado"), HttpStatus.OK);
     }
 
-}
+}*/

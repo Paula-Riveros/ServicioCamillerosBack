@@ -1,25 +1,18 @@
 package tech.getarrays.serviciocamilleros.Controller;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import tech.getarrays.serviciocamilleros.Dto.Mensaje;
-import tech.getarrays.serviciocamilleros.Dto.PacienteDto;
 import tech.getarrays.serviciocamilleros.Dto.ServicioDto;
 import tech.getarrays.serviciocamilleros.Model.Camillero;
 import tech.getarrays.serviciocamilleros.Model.Genpacien;
-import tech.getarrays.serviciocamilleros.Model.Paciente;
 import tech.getarrays.serviciocamilleros.Repo.CamilleroRepo;
 import tech.getarrays.serviciocamilleros.Repo.GenpacienRepo;
-import tech.getarrays.serviciocamilleros.Repo.PacienteRepo;
 import tech.getarrays.serviciocamilleros.Service.GenpacienService;
-import tech.getarrays.serviciocamilleros.Service.PacienteService;
 import tech.getarrays.serviciocamilleros.Service.ServicioService;
 import tech.getarrays.serviciocamilleros.Model.Servicio;
 
@@ -35,18 +28,14 @@ import java.util.Optional;
 @CrossOrigin(origins = "*")
 public class ServicioController {
     private final ServicioService servicioService;
-    private final PacienteService pacienteService;
     private final GenpacienService genpacienService;
-    private PacienteRepo pacienteRepo;
     private CamilleroRepo camilleroRepo;
     private GenpacienRepo genpacienRepo;
 
-    public ServicioController(ServicioService servicioService, PacienteService pacienteService, GenpacienService genpacienService,
-                              PacienteRepo pacienteRepo, CamilleroRepo camilleroRepo, GenpacienRepo genpacienRepo) {
+    public ServicioController(ServicioService servicioService, CamilleroRepo camilleroRepo,
+                              GenpacienService genpacienService, GenpacienRepo genpacienRepo) {
         this.servicioService = servicioService;
-        this.pacienteService = pacienteService;
         this.genpacienService = genpacienService;
-        this.pacienteRepo = pacienteRepo;
         this.camilleroRepo = camilleroRepo;
         this.genpacienRepo = genpacienRepo;
     }
@@ -140,13 +129,14 @@ public class ServicioController {
         LocalTime horaEjecucion = LocalTime.parse(servicioDto.getHoraEjecucion(), dtf);
         LocalTime horaFinalizacion = LocalTime.parse(servicioDto.getHoraFinalizacion(), dtf);
 
-        boolean aislamiento = Boolean.parseBoolean(servicioDto.getAislamiento());
+        //boolean aislamiento = Boolean.parseBoolean(servicioDto.getAislamiento());
 
         if(genpacien.isPresent()) {
             Servicio servicio = new Servicio(date, servicioDto.getServicioSolicitado(), servicioDto.getDestinoServicio(),
                     servicioDto.getSolicitante(), servicioDto.getTransporte(), servicioDto.getInsumo(), servicioDto.getFamiliar(),
-                    aislamiento, servicioDto.getObservaciones(), genpacien.get(), null, horaEnvio,
-                    horaAsignacion, horaEjecucion, horaFinalizacion);
+                    servicioDto.isAislamiento(), servicioDto.getObservaciones(), genpacien.get(), null, horaEnvio,
+                    horaAsignacion, horaEjecucion, horaFinalizacion, servicioDto.isCancelado(), servicioDto.getMotivoCancelado());
+            //genpacien.get(),
             servicioService.save(servicio);
             return new ResponseEntity<>(new Mensaje("Servicio guardado"), HttpStatus.OK);
         } else {
@@ -183,6 +173,13 @@ public class ServicioController {
     public ResponseEntity<Servicio> updateTime(@RequestBody Servicio servicio) {
         Servicio updateTime = servicioService.updateTimeServicio(servicio);
         return new ResponseEntity(new Mensaje("Hora guardada"), HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/updatecancelado")
+    public ResponseEntity<Servicio> updateCancelado(@RequestBody Servicio servicio) {
+        Servicio updateCancelado = servicioService.updateTimeServicio(servicio);
+        return new ResponseEntity(new Mensaje("Servicio cancelado"), HttpStatus.OK);
     }
 
     /*@PreAuthorize("hasRole('ADMIN')")

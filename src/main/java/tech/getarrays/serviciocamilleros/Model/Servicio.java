@@ -1,7 +1,5 @@
 package tech.getarrays.serviciocamilleros.Model;
 
-import org.hibernate.annotations.OnDelete;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -10,7 +8,7 @@ import java.time.LocalTime;
 @Entity
 public class Servicio implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     // @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
@@ -22,7 +20,7 @@ public class Servicio implements Serializable {
     private String transporte;
     private String insumo;
     private String familiar;
-    private boolean aislamiento;
+    private Boolean aislamiento;
     private String observaciones;
 
   /*  @ManyToOne(fetch = FetchType.EAGER)
@@ -42,13 +40,17 @@ public class Servicio implements Serializable {
     private LocalTime horaEjecucion;
     private LocalTime horaFinalizacion;
 
+    private Boolean cancelado;
+    private String motivoCancelado;
+
     public Servicio() {
     }
 
+    //
     public Servicio(LocalDate fecha, String servicioSolicitado, String destinoServicio, String solicitante,
-                    String transporte, String insumo, String familiar, boolean aislamiento, String observaciones,
+                    String transporte, String insumo, String familiar, Boolean aislamiento, String observaciones,
                     Genpacien genpacien, Camillero camillero, LocalTime horaEnvio, LocalTime horaAsignacion,
-                    LocalTime horaEjecucion, LocalTime horaFinalizacion) {
+                    LocalTime horaEjecucion, LocalTime horaFinalizacion, Boolean cancelado, String motivoCancelado) {
         this.fecha = fecha;
         this.servicioSolicitado = servicioSolicitado;
         this.destinoServicio = destinoServicio;
@@ -64,6 +66,8 @@ public class Servicio implements Serializable {
         this.horaAsignacion = horaAsignacion;
         this.horaEjecucion = horaEjecucion;
         this.horaFinalizacion = horaFinalizacion;
+        this.cancelado = cancelado;
+        this.motivoCancelado = motivoCancelado;
     }
 
     /*public Servicio(LocalDate fecha, String servicioSolicitado, String destinoServicio, String solicitante,
@@ -147,11 +151,11 @@ public class Servicio implements Serializable {
         this.familiar = familiar;
     }
 
-    public boolean isAislamiento() {
+    public Boolean getAislamiento() {
         return aislamiento;
     }
 
-    public void setAislamiento(boolean aislamiento) {
+    public void setAislamiento(Boolean aislamiento) {
         this.aislamiento = aislamiento;
     }
 
@@ -162,14 +166,6 @@ public class Servicio implements Serializable {
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
     }
-
-   /* public Paciente getPaciente() {
-        return paciente;
-    }
-
-    public void setPaciente(Paciente paciente) {
-        this.paciente = paciente;
-    }*/
 
     public Genpacien getGenpacien() {
         return genpacien;
@@ -219,6 +215,22 @@ public class Servicio implements Serializable {
         this.horaFinalizacion = horaFinalizacion;
     }
 
+    public Boolean getCancelado() {
+        return cancelado;
+    }
+
+    public void setCancelado(Boolean cancelado) {
+        this.cancelado = cancelado;
+    }
+
+    public String getMotivoCancelado() {
+        return motivoCancelado;
+    }
+
+    public void setMotivoCancelado(String motivoCancelado) {
+        this.motivoCancelado = motivoCancelado;
+    }
+
     @Override
     public String toString() {
         return "Servicio{" +
@@ -238,6 +250,8 @@ public class Servicio implements Serializable {
                 ", horaAsignacion=" + horaAsignacion +
                 ", horaEjecucion=" + horaEjecucion +
                 ", horaFinalizacion=" + horaFinalizacion +
+                ", cancelado=" + cancelado +
+                ", motivoCancelado=" + motivoCancelado +
                 '}';
     }
 }

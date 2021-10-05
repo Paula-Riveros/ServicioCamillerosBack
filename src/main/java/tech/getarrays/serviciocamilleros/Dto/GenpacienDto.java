@@ -1,6 +1,5 @@
 package tech.getarrays.serviciocamilleros.Dto;
 
-import javax.persistence.Column;
 import java.io.Serializable;
 
 public class GenpacienDto implements Serializable {

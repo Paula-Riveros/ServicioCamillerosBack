@@ -1,18 +1,12 @@
-package tech.getarrays.serviciocamilleros.Dto;
+/*package tech.getarrays.serviciocamilleros.Dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import tech.getarrays.serviciocamilleros.Model.Servicio;
 
-import javax.persistence.CascadeType;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class PacienteDto implements Serializable {
     @NotNull
@@ -75,4 +69,4 @@ public class PacienteDto implements Serializable {
     public void setTelefono(int telefono) {
         this.telefono = telefono;
     }
-}
+}*/

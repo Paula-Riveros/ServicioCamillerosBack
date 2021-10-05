@@ -1,4 +1,4 @@
-package tech.getarrays.serviciocamilleros.Service;
+/*package tech.getarrays.serviciocamilleros.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,5 +47,5 @@ public class PacienteService {
     public boolean existsByNombre(String nombre) {
         return pacienteRepo.existsByNombre(nombre);
     }
-}
+}*/
 

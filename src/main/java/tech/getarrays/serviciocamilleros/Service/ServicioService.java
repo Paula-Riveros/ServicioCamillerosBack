@@ -1,10 +1,7 @@
 package tech.getarrays.serviciocamilleros.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import tech.getarrays.serviciocamilleros.Model.Paciente;
 import tech.getarrays.serviciocamilleros.Repo.ServicioRepo;
 import tech.getarrays.serviciocamilleros.Model.Servicio;
 

@@ -1,4 +1,4 @@
-package tech.getarrays.serviciocamilleros.Repo;
+/*package tech.getarrays.serviciocamilleros.Repo;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -11,3 +11,4 @@ public interface PacienteRepo extends JpaRepository<Paciente, Integer> {
     Optional<Paciente> findByNombre(String nombre);
     boolean existsByNombre(String nombre);
 }
+*/

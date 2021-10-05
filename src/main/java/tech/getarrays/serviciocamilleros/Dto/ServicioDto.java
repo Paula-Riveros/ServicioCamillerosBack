@@ -1,7 +1,5 @@
 package tech.getarrays.serviciocamilleros.Dto;
 
-import tech.getarrays.serviciocamilleros.Model.Paciente;
-
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -21,11 +19,11 @@ public class ServicioDto implements Serializable {
     private String transporte;
     private String insumo;
     private String familiar;
-    private String aislamiento;
+    private boolean aislamiento;
     private String observaciones;
 
     @NotNull
-//    private int idPaciente;
+    private int idPaciente;
     private String docPaciente;
 
     private Integer idCamillero;
@@ -35,13 +33,17 @@ public class ServicioDto implements Serializable {
     private String horaEjecucion;
     private String horaFinalizacion;
 
+    private boolean cancelado;
+    private String motivoCancelado;
+
     public ServicioDto() {
     }
 
+   // String docPaciente,
     public ServicioDto(String fecha, String servicioSolicitado, String destinoServicio, String solicitante,
-                       String transporte, String insumo, String familiar, String aislamiento, String observaciones,
+                       String transporte, String insumo, String familiar, boolean aislamiento, String observaciones,
                        String docPaciente, Integer idCamillero, String horaEnvio, String horaAsignacion,
-                       String horaEjecucion, String horaFinalizacion) {
+                       String horaEjecucion, String horaFinalizacion, boolean cancelado, String motivoCancelado) {
         this.fecha = fecha;
         this.servicioSolicitado = servicioSolicitado;
         this.destinoServicio = destinoServicio;
@@ -57,6 +59,8 @@ public class ServicioDto implements Serializable {
         this.horaAsignacion = horaAsignacion;
         this.horaEjecucion = horaEjecucion;
         this.horaFinalizacion = horaFinalizacion;
+        this.cancelado = cancelado;
+        this.motivoCancelado = motivoCancelado;
     }
 
     /*public ServicioDto(String fecha, String servicioSolicitado, String destinoServicio, String solicitante,
@@ -131,11 +135,11 @@ public class ServicioDto implements Serializable {
         this.familiar = familiar;
     }
 
-    public String getAislamiento() {
+    public boolean isAislamiento() {
         return aislamiento;
     }
 
-    public void setAislamiento(String aislamiento) {
+    public void setAislamiento(boolean aislamiento) {
         this.aislamiento = aislamiento;
     }
 
@@ -146,14 +150,6 @@ public class ServicioDto implements Serializable {
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
     }
-
-/*    public int getIdPaciente() {
-        return idPaciente;
-    }
-
-    public void setIdPaciente(int idPaciente) {
-        this.idPaciente = idPaciente;
-    }*/
 
     public String getDocPaciente() {
         return docPaciente;
@@ -201,5 +197,21 @@ public class ServicioDto implements Serializable {
 
     public void setHoraFinalizacion(String horaFinalizacion) {
         this.horaFinalizacion = horaFinalizacion;
+    }
+
+    public boolean isCancelado() {
+        return cancelado;
+    }
+
+    public void setCancelado(boolean cancelado) {
+        this.cancelado = cancelado;
+    }
+
+    public String getMotivoCancelado() {
+        return motivoCancelado;
+    }
+
+    public void setMotivoCancelado(String motivoCancelado) {
+        this.motivoCancelado = motivoCancelado;
     }
 }
