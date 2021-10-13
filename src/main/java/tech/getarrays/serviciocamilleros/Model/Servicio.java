@@ -18,13 +18,12 @@ public class Servicio implements Serializable {
     @JoinColumn(name = "servicioSolicitado", referencedColumnName = "oid")
     private Genareser genareser;
 
-    private String destinoServicio;
-
- //   @ManyToOne(fetch = FetchType.EAGER)
- //   @JoinColumn(name = "destinoServicio", referencedColumnName = "oid")
- //   private Genareser genareserDestino;
-
     private String solicitante;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "destinoServicio", referencedColumnName = "oid")
+    private Genareser genareser2;
+
     private String transporte;
     private String insumo;
     private String familiar;
@@ -50,18 +49,16 @@ public class Servicio implements Serializable {
     public Servicio() {
     }
 
-    // String servicioSolicitado,
-    public Servicio(LocalDate fecha, Genareser genareser, String destinoServicio, String solicitante,
+    //
+    public Servicio(LocalDate fecha, Genareser genareser, String solicitante, Genareser genareser2,
                     String transporte, String insumo, String familiar, Boolean aislamiento, String observaciones,
                     Genpacien genpacien, Camillero camillero, LocalTime horaEnvio, LocalTime horaAsignacion,
                     LocalTime horaEjecucion, LocalTime horaFinalizacion, Boolean cancelado, String motivoCancelado) {
         this.fecha = fecha;
      //   this.servicioSolicitado = servicioSolicitado;
-     //
         this.genareser = genareser;
-        this.destinoServicio = destinoServicio;
-    //    this.genareserDestino = genareserDestino;
         this.solicitante = solicitante;
+        this.genareser2 = genareser2;
         this.transporte = transporte;
         this.insumo = insumo;
         this.familiar = familiar;
@@ -101,20 +98,20 @@ public class Servicio implements Serializable {
         this.genareser = genareser;
     }
 
-    public String getDestinoServicio() {
-        return destinoServicio;
-    }
-
-    public void setDestinoServicio(String destinoServicio) {
-        this.destinoServicio = destinoServicio;
-    }
-
     public String getSolicitante() {
         return solicitante;
     }
 
     public void setSolicitante(String solicitante) {
         this.solicitante = solicitante;
+    }
+
+    public Genareser getGenareser2() {
+        return genareser2;
+    }
+
+    public void setGenareser2(Genareser genareser2) {
+        this.genareser2 = genareser2;
     }
 
     public String getTransporte() {
@@ -227,8 +224,8 @@ public class Servicio implements Serializable {
                 "id=" + id +
                 ", fecha=" + fecha +
                 ", genareser=" + genareser +
-                ", destinoServicio=" + destinoServicio +
                 ", solicitante='" + solicitante + '\'' +
+                ", genareser2=" + genareser2 +
                 ", transporte='" + transporte + '\'' +
                 ", insumo='" + insumo + '\'' +
                 ", familiar='" + familiar + '\'' +

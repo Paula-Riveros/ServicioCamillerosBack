@@ -14,8 +14,8 @@ public class ServicioDto implements Serializable {
     @NotBlank
     private String fecha;
     private int servicioSolicitado;
-    private String destinoServicio;
     private String solicitante;
+    private int destinoServicio;
     private String transporte;
     private String insumo;
     private String familiar;
@@ -39,16 +39,14 @@ public class ServicioDto implements Serializable {
     }
 
    // String servicioSolicitado, String destinoServicio,
-    public ServicioDto(String fecha, int servicioSolicitado, String destinoServicio,  String solicitante,
+    public ServicioDto(String fecha, int servicioSolicitado, String solicitante, int destinoServicio,
                        String transporte, String insumo, String familiar, boolean aislamiento, String observaciones,
                        String docPaciente, Integer idCamillero, String horaEnvio, String horaAsignacion,
                        String horaEjecucion, String horaFinalizacion, boolean cancelado, String motivoCancelado) {
         this.fecha = fecha;
-   //     this.servicioSolicitado = servicioSolicitado;
-   //     this.destinoServicio = destinoServicio;
         this.servicioSolicitado = servicioSolicitado;
-        this.destinoServicio = destinoServicio;
         this.solicitante = solicitante;
+        this.destinoServicio = destinoServicio;
         this.transporte = transporte;
         this.insumo = insumo;
         this.familiar = familiar;
@@ -96,20 +94,20 @@ public class ServicioDto implements Serializable {
         this.servicioSolicitado = servicioSolicitado;
     }
 
-    public String getDestinoServicio() {
-        return destinoServicio;
-    }
-
-    public void setDestinoServicio(String destinoServicio) {
-        this.destinoServicio = destinoServicio;
-    }
-
     public String getSolicitante() {
         return solicitante;
     }
 
     public void setSolicitante(String solicitante) {
         this.solicitante = solicitante;
+    }
+
+    public int getDestinoServicio() {
+        return destinoServicio;
+    }
+
+    public void setDestinoServicio(int destinoServicio) {
+        this.destinoServicio = destinoServicio;
     }
 
     public String getTransporte() {

@@ -104,7 +104,7 @@ public class ServicioController {
         if(bindingResult.hasErrors())
             return new ResponseEntity<>(new Mensaje("Campos mal puestos o inválidos"), HttpStatus.BAD_REQUEST);
         Optional<Genareser> genareser = genareserRepo.findById(servicioDto.getServicioSolicitado());
-    //    Optional<Genareser> genareserDestino = genareserRepo.findById(servicioDto.getServicioSolicitado());
+        Optional<Genareser> genareser2 = genareserRepo.findById(servicioDto.getDestinoServicio());
 
         Optional<Genpacien> genpacien = genpacienRepo.findByPacnumdoc(servicioDto.getDocPaciente());
 //       Optional<Camillero> camillero = camilleroRepo.findById(servicioDto.getIdCamillero());
@@ -122,8 +122,8 @@ public class ServicioController {
 
         // servicioDto.getServicioSolicitado(), servicioDto.getDestinoServicio(),
         if(genpacien.isPresent()) {
-            Servicio servicio = new Servicio(date, genareser.get(), servicioDto.getDestinoServicio(),
-                    servicioDto.getSolicitante(), servicioDto.getTransporte(), servicioDto.getInsumo(), servicioDto.getFamiliar(),
+            Servicio servicio = new Servicio(date, genareser.get(), servicioDto.getSolicitante(), genareser2.get(),
+                    servicioDto.getTransporte(), servicioDto.getInsumo(), servicioDto.getFamiliar(),
                     servicioDto.isAislamiento(), servicioDto.getObservaciones(), genpacien.get(), null, horaEnvio,
                     horaAsignacion, horaEjecucion, horaFinalizacion, servicioDto.isCancelado(), servicioDto.getMotivoCancelado());
             servicioService.save(servicio);
