@@ -11,3 +11,4 @@ public interface GenpacienRepo extends JpaRepository<Genpacien, Integer> {
     Optional<Genpacien> findByPacnumdoc(String pacnumdoc);
     boolean existsByPacnumdoc(String pacnumdoc);
 }
+

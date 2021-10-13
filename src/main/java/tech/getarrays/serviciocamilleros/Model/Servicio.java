@@ -11,21 +11,25 @@ public class Servicio implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     // @JsonIgnore
     private LocalDate fecha;
-    private String servicioSolicitado;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "servicioSolicitado", referencedColumnName = "oid")
+    private Genareser genareser;
+
     private String destinoServicio;
+
+ //   @ManyToOne(fetch = FetchType.EAGER)
+ //   @JoinColumn(name = "destinoServicio", referencedColumnName = "oid")
+ //   private Genareser genareserDestino;
+
     private String solicitante;
     private String transporte;
     private String insumo;
     private String familiar;
     private Boolean aislamiento;
     private String observaciones;
-
-  /*  @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_paciente", referencedColumnName = "id")
-    private Paciente paciente;*/
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "oidGenpacien", referencedColumnName = "oid")
@@ -46,14 +50,17 @@ public class Servicio implements Serializable {
     public Servicio() {
     }
 
-    //
-    public Servicio(LocalDate fecha, String servicioSolicitado, String destinoServicio, String solicitante,
+    // String servicioSolicitado,
+    public Servicio(LocalDate fecha, Genareser genareser, String destinoServicio, String solicitante,
                     String transporte, String insumo, String familiar, Boolean aislamiento, String observaciones,
                     Genpacien genpacien, Camillero camillero, LocalTime horaEnvio, LocalTime horaAsignacion,
                     LocalTime horaEjecucion, LocalTime horaFinalizacion, Boolean cancelado, String motivoCancelado) {
         this.fecha = fecha;
-        this.servicioSolicitado = servicioSolicitado;
+     //   this.servicioSolicitado = servicioSolicitado;
+     //
+        this.genareser = genareser;
         this.destinoServicio = destinoServicio;
+    //    this.genareserDestino = genareserDestino;
         this.solicitante = solicitante;
         this.transporte = transporte;
         this.insumo = insumo;
@@ -69,23 +76,6 @@ public class Servicio implements Serializable {
         this.cancelado = cancelado;
         this.motivoCancelado = motivoCancelado;
     }
-
-    /*public Servicio(LocalDate fecha, String servicioSolicitado, String destinoServicio, String solicitante,
-                    String transporte, String insumo, String familiar, boolean aislamiento, String observaciones,
-                    Paciente paciente, Camillero camillero) {
-        this.fecha = fecha;
-        this.servicioSolicitado = servicioSolicitado;
-        this.destinoServicio = destinoServicio;
-        this.solicitante = solicitante;
-        this.transporte = transporte;
-        this.insumo = insumo;
-        this.familiar = familiar;
-        this.aislamiento = aislamiento;
-        this.observaciones = observaciones;
-        this.paciente = paciente;
-        this.camillero = camillero;
-    }*/
-
 
     public Long getId() {
         return id;
@@ -103,12 +93,12 @@ public class Servicio implements Serializable {
         this.fecha = fecha;
     }
 
-    public String getServicioSolicitado() {
-        return servicioSolicitado;
+    public Genareser getGenareser() {
+        return genareser;
     }
 
-    public void setServicioSolicitado(String servicioSolicitado) {
-        this.servicioSolicitado = servicioSolicitado;
+    public void setGenareser(Genareser genareser) {
+        this.genareser = genareser;
     }
 
     public String getDestinoServicio() {
@@ -236,8 +226,8 @@ public class Servicio implements Serializable {
         return "Servicio{" +
                 "id=" + id +
                 ", fecha=" + fecha +
-                ", servicioSolicitado='" + servicioSolicitado + '\'' +
-                ", destinoServicio='" + destinoServicio + '\'' +
+                ", genareser=" + genareser +
+                ", destinoServicio=" + destinoServicio +
                 ", solicitante='" + solicitante + '\'' +
                 ", transporte='" + transporte + '\'' +
                 ", insumo='" + insumo + '\'' +
@@ -251,7 +241,7 @@ public class Servicio implements Serializable {
                 ", horaEjecucion=" + horaEjecucion +
                 ", horaFinalizacion=" + horaFinalizacion +
                 ", cancelado=" + cancelado +
-                ", motivoCancelado=" + motivoCancelado +
+                ", motivoCancelado='" + motivoCancelado + '\'' +
                 '}';
     }
 }

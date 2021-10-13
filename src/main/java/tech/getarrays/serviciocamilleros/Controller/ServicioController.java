@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.*;
 import tech.getarrays.serviciocamilleros.Dto.Mensaje;
 import tech.getarrays.serviciocamilleros.Dto.ServicioDto;
 import tech.getarrays.serviciocamilleros.Model.Camillero;
+import tech.getarrays.serviciocamilleros.Model.Genareser;
 import tech.getarrays.serviciocamilleros.Model.Genpacien;
 import tech.getarrays.serviciocamilleros.Repo.CamilleroRepo;
+import tech.getarrays.serviciocamilleros.Repo.GenareserRepo;
 import tech.getarrays.serviciocamilleros.Repo.GenpacienRepo;
 import tech.getarrays.serviciocamilleros.Service.GenpacienService;
 import tech.getarrays.serviciocamilleros.Service.ServicioService;
@@ -31,13 +33,17 @@ public class ServicioController {
     private final GenpacienService genpacienService;
     private CamilleroRepo camilleroRepo;
     private GenpacienRepo genpacienRepo;
+    private GenareserRepo genareserRepo;
 
+    //
     public ServicioController(ServicioService servicioService, CamilleroRepo camilleroRepo,
-                              GenpacienService genpacienService, GenpacienRepo genpacienRepo) {
+                              GenpacienService genpacienService, GenpacienRepo genpacienRepo,
+                              GenareserRepo genareserRepo) {
         this.servicioService = servicioService;
         this.genpacienService = genpacienService;
         this.camilleroRepo = camilleroRepo;
         this.genpacienRepo = genpacienRepo;
+        this.genareserRepo = genareserRepo;
     }
 
     @GetMapping("/lista")
@@ -93,30 +99,13 @@ public class ServicioController {
         return new ResponseEntity<>(servicios, HttpStatus.OK);
     }
 
-   /*@PostMapping("/create")
-    public ResponseEntity<?> create(@Valid @RequestBody ServicioDto servicioDto, BindingResult bindingResult) {
-        if(bindingResult.hasErrors())
-            return new ResponseEntity<>(new Mensaje("Campos mal puestos o inválidos"), HttpStatus.BAD_REQUEST);
-       Optional<Paciente> paciente = pacienteRepo.findById(servicioDto.getIdPaciente());
-//       Optional<Camillero> camillero = camilleroRepo.findById(servicioDto.getIdCamillero());
-       DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-       LocalDate date = LocalDate.parse(servicioDto.getFecha(), formatter);
-       boolean aislamiento = Boolean.parseBoolean(servicioDto.getAislamiento());
-       if(paciente.isPresent()) {
-           Servicio servicio = new Servicio(date, servicioDto.getServicioSolicitado(), servicioDto.getDestinoServicio(),
-                   servicioDto.getSolicitante(), servicioDto.getTransporte(), servicioDto.getInsumo(), servicioDto.getFamiliar(),
-                   aislamiento, servicioDto.getObservaciones(), paciente.get(), null);
-           servicioService.save(servicio);
-           return new ResponseEntity<>(new Mensaje("Servicio guardado"), HttpStatus.OK);
-       } else {
-           return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-       }
-    }*/
-
     @PostMapping("/create")
     public ResponseEntity<?> create(@Valid @RequestBody ServicioDto servicioDto, BindingResult bindingResult) {
         if(bindingResult.hasErrors())
             return new ResponseEntity<>(new Mensaje("Campos mal puestos o inválidos"), HttpStatus.BAD_REQUEST);
+        Optional<Genareser> genareser = genareserRepo.findById(servicioDto.getServicioSolicitado());
+    //    Optional<Genareser> genareserDestino = genareserRepo.findById(servicioDto.getServicioSolicitado());
+
         Optional<Genpacien> genpacien = genpacienRepo.findByPacnumdoc(servicioDto.getDocPaciente());
 //       Optional<Camillero> camillero = camilleroRepo.findById(servicioDto.getIdCamillero());
 
@@ -131,12 +120,12 @@ public class ServicioController {
 
         //boolean aislamiento = Boolean.parseBoolean(servicioDto.getAislamiento());
 
+        // servicioDto.getServicioSolicitado(), servicioDto.getDestinoServicio(),
         if(genpacien.isPresent()) {
-            Servicio servicio = new Servicio(date, servicioDto.getServicioSolicitado(), servicioDto.getDestinoServicio(),
+            Servicio servicio = new Servicio(date, genareser.get(), servicioDto.getDestinoServicio(),
                     servicioDto.getSolicitante(), servicioDto.getTransporte(), servicioDto.getInsumo(), servicioDto.getFamiliar(),
                     servicioDto.isAislamiento(), servicioDto.getObservaciones(), genpacien.get(), null, horaEnvio,
                     horaAsignacion, horaEjecucion, horaFinalizacion, servicioDto.isCancelado(), servicioDto.getMotivoCancelado());
-            //genpacien.get(),
             servicioService.save(servicio);
             return new ResponseEntity<>(new Mensaje("Servicio guardado"), HttpStatus.OK);
         } else {
