@@ -61,3 +61,4 @@ public class GenpacienDto implements Serializable {
         this.pacsegape = pacsegape;
     }
 }
+

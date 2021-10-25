@@ -38,7 +38,7 @@ public class ServicioDto implements Serializable {
     public ServicioDto() {
     }
 
-   // String servicioSolicitado, String destinoServicio,
+   //
     public ServicioDto(String fecha, int servicioSolicitado, String solicitante, int destinoServicio,
                        String transporte, String insumo, String familiar, boolean aislamiento, String observaciones,
                        String docPaciente, Integer idCamillero, String horaEnvio, String horaAsignacion,
@@ -94,6 +94,14 @@ public class ServicioDto implements Serializable {
         this.servicioSolicitado = servicioSolicitado;
     }
 
+    public int getDestinoServicio() {
+        return destinoServicio;
+    }
+
+    public void setDestinoServicio(int destinoServicio) {
+        this.destinoServicio = destinoServicio;
+    }
+
     public String getSolicitante() {
         return solicitante;
     }
@@ -102,13 +110,6 @@ public class ServicioDto implements Serializable {
         this.solicitante = solicitante;
     }
 
-    public int getDestinoServicio() {
-        return destinoServicio;
-    }
-
-    public void setDestinoServicio(int destinoServicio) {
-        this.destinoServicio = destinoServicio;
-    }
 
     public String getTransporte() {
         return transporte;

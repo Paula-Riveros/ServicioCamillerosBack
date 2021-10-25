@@ -50,12 +50,11 @@ public class Servicio implements Serializable {
     }
 
     //
-    public Servicio(LocalDate fecha, Genareser genareser, String solicitante, Genareser genareser2,
+    public Servicio(LocalDate fecha, Genareser genareser,  String solicitante, Genareser genareser2,
                     String transporte, String insumo, String familiar, Boolean aislamiento, String observaciones,
                     Genpacien genpacien, Camillero camillero, LocalTime horaEnvio, LocalTime horaAsignacion,
                     LocalTime horaEjecucion, LocalTime horaFinalizacion, Boolean cancelado, String motivoCancelado) {
         this.fecha = fecha;
-     //   this.servicioSolicitado = servicioSolicitado;
         this.genareser = genareser;
         this.solicitante = solicitante;
         this.genareser2 = genareser2;
@@ -98,20 +97,28 @@ public class Servicio implements Serializable {
         this.genareser = genareser;
     }
 
-    public String getSolicitante() {
-        return solicitante;
-    }
-
-    public void setSolicitante(String solicitante) {
-        this.solicitante = solicitante;
-    }
-
     public Genareser getGenareser2() {
         return genareser2;
     }
 
     public void setGenareser2(Genareser genareser2) {
         this.genareser2 = genareser2;
+    }
+
+    public Genpacien getGenpacien() {
+        return genpacien;
+    }
+
+    public void setGenpacien(Genpacien genpacien) {
+        this.genpacien = genpacien;
+    }
+
+    public String getSolicitante() {
+        return solicitante;
+    }
+
+    public void setSolicitante(String solicitante) {
+        this.solicitante = solicitante;
     }
 
     public String getTransporte() {
@@ -154,13 +161,6 @@ public class Servicio implements Serializable {
         this.observaciones = observaciones;
     }
 
-    public Genpacien getGenpacien() {
-        return genpacien;
-    }
-
-    public void setGenpacien(Genpacien genpacien) {
-        this.genpacien = genpacien;
-    }
 
     public Camillero getCamillero() {
         return camillero;

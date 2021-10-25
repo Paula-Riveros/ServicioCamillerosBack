@@ -32,3 +32,4 @@ public class GenareserController {
         return new ResponseEntity<>(genareser, HttpStatus.OK);
     }
 }
+

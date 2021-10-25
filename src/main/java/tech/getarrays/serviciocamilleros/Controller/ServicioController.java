@@ -52,26 +52,7 @@ public class ServicioController {
         return new ResponseEntity<>(servicios, HttpStatus.OK);
     }
 
-    /*@GetMapping("/lista")
-    public ResponseEntity<Page<Servicio>> getAllServicios(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "15") int size,
-            @RequestParam(defaultValue = "id") String order,
-            @RequestParam(defaultValue = "true") boolean asc
-    ) {
-        Page<Servicio> servicios = servicioService.list(
-                PageRequest.of(page, size, Sort.by(order)));
-        if (!asc)
-            servicios = servicioService.list(
-                    PageRequest.of(page, size, Sort.by(order).descending()));
-        return new ResponseEntity<>(servicios, HttpStatus.OK);
-    }*/
 
-/*    @PostMapping("/add")
-    public ResponseEntity<Servicio> addServicio(@RequestBody Servicio servicio) {
-        Servicio newServicio = servicioService.addServicio(servicio);
-        return new ResponseEntity<>(newServicio, HttpStatus.CREATED);
-    }*/
 
     @GetMapping("/detail/{id}")
     public ResponseEntity<Servicio> getById(@PathVariable("id") Long id) {
@@ -120,7 +101,7 @@ public class ServicioController {
 
         //boolean aislamiento = Boolean.parseBoolean(servicioDto.getAislamiento());
 
-        // servicioDto.getServicioSolicitado(), servicioDto.getDestinoServicio(),
+
         if(genpacien.isPresent()) {
             Servicio servicio = new Servicio(date, genareser.get(), servicioDto.getSolicitante(), genareser2.get(),
                     servicioDto.getTransporte(), servicioDto.getInsumo(), servicioDto.getFamiliar(),
@@ -133,7 +114,7 @@ public class ServicioController {
         }
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('SUPERADMIN')")
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(@PathVariable("id") Long id, @RequestBody ServicioDto servicioDto) {
         if(!servicioService.existsById(id))
@@ -157,14 +138,14 @@ public class ServicioController {
         return new ResponseEntity<>(new Mensaje("Servicio actualizado"), HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('SUPERADMIN')")
     @PutMapping("/updatetime")
     public ResponseEntity<Servicio> updateTime(@RequestBody Servicio servicio) {
         Servicio updateTime = servicioService.updateTimeServicio(servicio);
         return new ResponseEntity(new Mensaje("Hora guardada"), HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('SUPERADMIN')")
     @PutMapping("/updatecancelado")
     public ResponseEntity<Servicio> updateCancelado(@RequestBody Servicio servicio) {
         Servicio updateCancelado = servicioService.updateTimeServicio(servicio);
@@ -187,7 +168,7 @@ public class ServicioController {
         return new ResponseEntity<>(new Mensaje("Hora guardada"), HttpStatus.OK);
     }*/
 
-    @PreAuthorize("hasRole('ADMIN') or hasRole('SUPERADMIN')")
+    @PreAuthorize("hasRole('SUPERADMIN')")
     @DeleteMapping("/delete/{id}")
     ResponseEntity<Servicio> delete(@PathVariable Long id){
         if(servicioService.delete(id)) {
