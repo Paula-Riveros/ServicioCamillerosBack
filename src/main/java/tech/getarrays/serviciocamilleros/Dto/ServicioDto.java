@@ -1,13 +1,9 @@
 package tech.getarrays.serviciocamilleros.Dto;
 
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 import java.io.Serializable;
-import java.time.LocalTime;
 
 public class ServicioDto implements Serializable {
     
@@ -32,8 +28,11 @@ public class ServicioDto implements Serializable {
     private String horaEjecucion;
     private String horaFinalizacion;
 
+    private Integer tiempoTotal;
+
     private boolean cancelado;
     private String motivoCancelado;
+    private String horaCancelacion;
 
     public ServicioDto() {
     }
@@ -42,7 +41,8 @@ public class ServicioDto implements Serializable {
     public ServicioDto(String fecha, int servicioSolicitado, String solicitante, int destinoServicio,
                        String transporte, String insumo, String familiar, boolean aislamiento, String observaciones,
                        String docPaciente, Integer idCamillero, String horaEnvio, String horaAsignacion,
-                       String horaEjecucion, String horaFinalizacion, boolean cancelado, String motivoCancelado) {
+                       String horaEjecucion, String horaFinalizacion, Integer tiempoTotal,
+                       boolean cancelado, String motivoCancelado, String horaCancelacion) {
         this.fecha = fecha;
         this.servicioSolicitado = servicioSolicitado;
         this.solicitante = solicitante;
@@ -58,8 +58,10 @@ public class ServicioDto implements Serializable {
         this.horaAsignacion = horaAsignacion;
         this.horaEjecucion = horaEjecucion;
         this.horaFinalizacion = horaFinalizacion;
+        this.tiempoTotal = tiempoTotal;
         this.cancelado = cancelado;
         this.motivoCancelado = motivoCancelado;
+        this.horaCancelacion = horaCancelacion;
     }
 
     /*public ServicioDto(String fecha, String servicioSolicitado, String destinoServicio, String solicitante,
@@ -199,6 +201,14 @@ public class ServicioDto implements Serializable {
         this.horaFinalizacion = horaFinalizacion;
     }
 
+    public Integer getTiempoTotal() {
+        return tiempoTotal;
+    }
+
+    public void setTiempoTotal(Integer tiempoTotal) {
+        this.tiempoTotal = tiempoTotal;
+    }
+
     public boolean isCancelado() {
         return cancelado;
     }
@@ -213,5 +223,13 @@ public class ServicioDto implements Serializable {
 
     public void setMotivoCancelado(String motivoCancelado) {
         this.motivoCancelado = motivoCancelado;
+    }
+
+    public String getHoraCancelacion() {
+        return horaCancelacion;
+    }
+
+    public void setHoraCancelacion(String horaCancelacion) {
+        this.horaCancelacion = horaCancelacion;
     }
 }

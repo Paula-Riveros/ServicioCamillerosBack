@@ -37,8 +37,7 @@ public class ServicioController {
 
     //
     public ServicioController(ServicioService servicioService, CamilleroRepo camilleroRepo,
-                              GenpacienService genpacienService, GenpacienRepo genpacienRepo,
-                              GenareserRepo genareserRepo) {
+                              GenpacienService genpacienService, GenpacienRepo genpacienRepo, GenareserRepo genareserRepo) {
         this.servicioService = servicioService;
         this.genpacienService = genpacienService;
         this.camilleroRepo = camilleroRepo;
@@ -51,7 +50,6 @@ public class ServicioController {
         List<Servicio> servicios = servicioService.list();
         return new ResponseEntity<>(servicios, HttpStatus.OK);
     }
-
 
 
     @GetMapping("/detail/{id}")
@@ -88,7 +86,6 @@ public class ServicioController {
         Optional<Genareser> genareser2 = genareserRepo.findById(servicioDto.getDestinoServicio());
 
         Optional<Genpacien> genpacien = genpacienRepo.findByPacnumdoc(servicioDto.getDocPaciente());
-//       Optional<Camillero> camillero = camilleroRepo.findById(servicioDto.getIdCamillero());
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate date = LocalDate.parse(servicioDto.getFecha(), formatter);
@@ -98,15 +95,16 @@ public class ServicioController {
         LocalTime horaAsignacion = LocalTime.parse(servicioDto.getHoraAsignacion(), dtf);
         LocalTime horaEjecucion = LocalTime.parse(servicioDto.getHoraEjecucion(), dtf);
         LocalTime horaFinalizacion = LocalTime.parse(servicioDto.getHoraFinalizacion(), dtf);
+        LocalTime horaCancelacion = LocalTime.parse(servicioDto.getHoraCancelacion(), dtf);
 
         //boolean aislamiento = Boolean.parseBoolean(servicioDto.getAislamiento());
-
 
         if(genpacien.isPresent()) {
             Servicio servicio = new Servicio(date, genareser.get(), servicioDto.getSolicitante(), genareser2.get(),
                     servicioDto.getTransporte(), servicioDto.getInsumo(), servicioDto.getFamiliar(),
                     servicioDto.isAislamiento(), servicioDto.getObservaciones(), genpacien.get(), null, horaEnvio,
-                    horaAsignacion, horaEjecucion, horaFinalizacion, servicioDto.isCancelado(), servicioDto.getMotivoCancelado());
+                    horaAsignacion, horaEjecucion, horaFinalizacion, servicioDto.getTiempoTotal(),
+                    servicioDto.isCancelado(), servicioDto.getMotivoCancelado(), horaCancelacion);
             servicioService.save(servicio);
             return new ResponseEntity<>(new Mensaje("Servicio guardado"), HttpStatus.OK);
         } else {
@@ -138,7 +136,6 @@ public class ServicioController {
         return new ResponseEntity<>(new Mensaje("Servicio actualizado"), HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ADMIN') or hasRole('SUPERADMIN')")
     @PutMapping("/updatetime")
     public ResponseEntity<Servicio> updateTime(@RequestBody Servicio servicio) {
         Servicio updateTime = servicioService.updateTimeServicio(servicio);
@@ -152,21 +149,6 @@ public class ServicioController {
         return new ResponseEntity(new Mensaje("Servicio cancelado"), HttpStatus.OK);
     }
 
-    /*@PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/updatetime/{id}")
-    public ResponseEntity<?> updateTime(@PathVariable("id") Long id, @RequestBody ServicioDto servicioDto) {
-        if(!servicioService.existsById(id))
-            return new ResponseEntity<>(new Mensaje("No existe"), HttpStatus.NOT_FOUND);
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("H:mm:ss");
-        LocalTime horaEjecucion = LocalTime.parse(servicioDto.getHoraEjecucion(), dtf);
-        LocalTime horaFinalizacion = LocalTime.parse(servicioDto.getHoraFinalizacion(), dtf);
-
-        Servicio servicio = servicioService.getOne(id).get();
-        servicio.setHoraEjecucion(horaEjecucion);
-        servicio.setHoraFinalizacion(horaFinalizacion);
-        servicioService.save(servicio);
-        return new ResponseEntity<>(new Mensaje("Hora guardada"), HttpStatus.OK);
-    }*/
 
     @PreAuthorize("hasRole('SUPERADMIN')")
     @DeleteMapping("/delete/{id}")

@@ -43,17 +43,22 @@ public class Servicio implements Serializable {
     private LocalTime horaEjecucion;
     private LocalTime horaFinalizacion;
 
+    @Column(name = "minutosTiempoTotal")
+    private Integer tiempoTotal;
+
     private Boolean cancelado;
     private String motivoCancelado;
+    private LocalTime horaCancelacion;
 
     public Servicio() {
     }
 
     //
-    public Servicio(LocalDate fecha, Genareser genareser,  String solicitante, Genareser genareser2,
+    public Servicio(LocalDate fecha, Genareser genareser, String solicitante, Genareser genareser2,
                     String transporte, String insumo, String familiar, Boolean aislamiento, String observaciones,
                     Genpacien genpacien, Camillero camillero, LocalTime horaEnvio, LocalTime horaAsignacion,
-                    LocalTime horaEjecucion, LocalTime horaFinalizacion, Boolean cancelado, String motivoCancelado) {
+                    LocalTime horaEjecucion, LocalTime horaFinalizacion, Integer tiempoTotal,
+                    Boolean cancelado, String motivoCancelado, LocalTime horaCancelacion) {
         this.fecha = fecha;
         this.genareser = genareser;
         this.solicitante = solicitante;
@@ -69,8 +74,10 @@ public class Servicio implements Serializable {
         this.horaAsignacion = horaAsignacion;
         this.horaEjecucion = horaEjecucion;
         this.horaFinalizacion = horaFinalizacion;
+        this.tiempoTotal = tiempoTotal;
         this.cancelado = cancelado;
         this.motivoCancelado = motivoCancelado;
+        this.horaCancelacion = horaCancelacion;
     }
 
     public Long getId() {
@@ -202,6 +209,14 @@ public class Servicio implements Serializable {
         this.horaFinalizacion = horaFinalizacion;
     }
 
+    public Integer getTiempoTotal() {
+        return tiempoTotal;
+    }
+
+    public void setTiempoTotal(Integer tiempoTotal) {
+        this.tiempoTotal = tiempoTotal;
+    }
+
     public Boolean getCancelado() {
         return cancelado;
     }
@@ -216,6 +231,14 @@ public class Servicio implements Serializable {
 
     public void setMotivoCancelado(String motivoCancelado) {
         this.motivoCancelado = motivoCancelado;
+    }
+
+    public LocalTime getHoraCancelacion() {
+        return horaCancelacion;
+    }
+
+    public void setHoraCancelacion(LocalTime horaCancelacion) {
+        this.horaCancelacion = horaCancelacion;
     }
 
     @Override
@@ -237,8 +260,10 @@ public class Servicio implements Serializable {
                 ", horaAsignacion=" + horaAsignacion +
                 ", horaEjecucion=" + horaEjecucion +
                 ", horaFinalizacion=" + horaFinalizacion +
+                ", tiempoTotal='" + tiempoTotal + '\'' +
                 ", cancelado=" + cancelado +
                 ", motivoCancelado='" + motivoCancelado + '\'' +
+                ", horaCancelacion=" + horaCancelacion +
                 '}';
     }
 }

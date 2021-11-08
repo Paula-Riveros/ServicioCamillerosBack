@@ -47,7 +47,7 @@ public class CamilleroController {
             return new ResponseEntity<>(new Mensaje("Campos mal puestos o inválidos"), HttpStatus.BAD_REQUEST);
         if (camilleroService.existsById(camilleroDto.getIdCamillero()))
             return new ResponseEntity(new Mensaje("Ya existe un camillero con ese número de documento"), HttpStatus.BAD_REQUEST);
-        // Boolean estadoCamillero = Boolean.parseBoolean(camilleroDto.getEstadoCamillero());
+
         Camillero camillero = new Camillero(camilleroDto.getIdCamillero(), camilleroDto.getNombreCamillero(), camilleroDto.isEstadoCamillero());
         camilleroService.save(camillero);
         return new ResponseEntity<>(new Mensaje("Camillero guardado"), HttpStatus.OK);
@@ -58,11 +58,10 @@ public class CamilleroController {
     public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody CamilleroDto camilleroDto) {
         if(!camilleroService.existsById(id))
             return new ResponseEntity<>(new Mensaje("No existe"), HttpStatus.NOT_FOUND);
-       /* if(camilleroService.existsById(camilleroDto.getIdCamillero()))
-            return new ResponseEntity<>(new Mensaje("Ya existe un camillero con ese número de documento"), HttpStatus.BAD_REQUEST);*/
+
         if (StringUtils.isBlank(camilleroDto.getNombreCamillero()))
             return new ResponseEntity<>(new Mensaje("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
-        // Boolean estadoCamillero = Boolean.parseBoolean(camilleroDto.getEstadoCamillero());
+
         Camillero camillero = camilleroService.getOne(id).get();
         camillero.setNombreCamillero(camilleroDto.getNombreCamillero());
         camillero.setEstadoCamillero(camilleroDto.isEstadoCamillero());
@@ -70,7 +69,7 @@ public class CamilleroController {
         return new ResponseEntity<>(new Mensaje("Camillero actualizado"), HttpStatus.OK);
     }
 
-    /*@PreAuthorize("hasRole('SUPERADMIN')")
+    @PreAuthorize("hasRole('SUPERADMIN')")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Camillero> delete(@PathVariable("id") int id) {
         if (camilleroService.delete(id)) {
@@ -78,5 +77,5 @@ public class CamilleroController {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-    }*/
+    }
 }
